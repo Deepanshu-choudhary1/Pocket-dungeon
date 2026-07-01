@@ -1,16 +1,18 @@
 # Pocket Dungeon
 
-A small Expo + React Native project (3D/Three.js + Zustand) for a pocket-sized dungeon demo.
+A small 3D roguelike demo built with Expo + React Native + React Three Fiber and Rapier physics.
+
+This repository contains the web and native (Expo) app used during development.
 
 ## Prerequisites
 
-- Node.js 18+ (or latest LTS)
-- npm or Yarn
-- Optional: Android Studio / iOS tooling for emulators, or the Expo Go app on a physical device
+- Node.js 18+ (recommended)
+- npm or yarn
+- Recommended: VS Code with the project opened at the `pocket-dungeon` folder
 
-## Install
+## Install dependencies
 
-1. Install dependencies:
+From the project root (`pocket-dungeon/pocket-dungeon`):
 
 ```bash
 npm install
@@ -18,55 +20,65 @@ npm install
 yarn install
 ```
 
-## Run (development)
+## TypeScript check
 
-- Start the Metro/Expo dev server:
-
-```bash
-npm run start
-# or
-yarn start
-```
-
-- Open on Android device/emulator:
+Ensure the codebase compiles cleanly:
 
 ```bash
-npm run android
-# or
-yarn android
+npx tsc --noEmit
 ```
 
-- Open in a browser (web):
+## Run in development (Expo)
+
+Start the Expo dev server (Metro):
+
+```bash
+npm start
+# or
+npx expo start
+```
+
+- Open on web (recommended for quick iteration):
 
 ```bash
 npm run web
 # or
-yarn web
+npx expo start --web
 ```
 
-## Quick troubleshooting
-
-- Clear Metro cache if you hit strange bundling errors:
+- Open on Android/iOS using Expo Go (scan the QR code the Metro page shows) or use the emulator commands:
 
 ```bash
-npx expo start -c
+npm run android
+# (macOS) for iOS simulator
+npx expo start --ios
 ```
 
-- If you see native build issues, try removing `node_modules` and reinstalling:
+## Dev notes / debugging
+
+- Camera debug: append `?debugCamera=1` to the web URL to show camera and look target markers.
+- Rapier (physics) runs on WebAssembly; the first load may fetch WASM binaries.
+- If you see `applyImpulse failed (body may be invalid)` warnings, they are guarded and non-fatal — they indicate a Rapier body became temporarily unavailable (usually on hot reload).
+
+## Common commands
+
+- Type-check: `npx tsc --noEmit`
+- Start dev server: `npm start` or `npx expo start`
+- Run web: `npm run web` or `npx expo start --web`
+- Run Android: `npm run android`
+
+## Project structure
+
+- `App.tsx` — entry and scene orchestration
+- `src/components/` — React components and entities (hero, enemies, level)
+- `src/store/rogueStore.tsx` — global state
+
+## Troubleshooting
+
+- If the web build fails with Rapier related errors, try removing `node_modules` and reinstalling:
 
 ```bash
-rm -rf node_modules
-npm install
+rm -rf node_modules package-lock.json && npm install
 ```
 
-- For running on a physical device, install the Expo Go app and scan the QR code shown by the dev server.
-
-## Building production apps
-
-To produce platform binaries use Expo Application Services (EAS) or the classic Expo build commands. EAS requires an Expo account and additional setup.
-
-## Helpful files
-
-- `App.tsx`: app entry
-- `package.json`: scripts and dependencies
-- `src/`: application source (components, store, types)
+- If testing on a real device via Expo, ensure your computer and device are on the same network.
