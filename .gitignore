@@ -5,9 +5,9 @@ node_modules/
 
 # Expo
 .expo/
+.expo-shared/
 dist/
 web-build/
-expo-env.d.ts
 
 # Native
 .kotlin/
@@ -26,11 +26,21 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
+# logs
+*.log
+logs/
+
+# IDEs and editors
+.vscode/
+.idea/
+
 # macOS
 .DS_Store
 *.pem
 
 # local env files
+.env
+.env.*
 .env*.local
 
 # typescript
@@ -39,3 +49,17 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# coverage
+coverage/
+
+# build artifacts
+build/
+dist/
+
+# lockfiles for alternative package managers
+pnpm-lock.yaml
+
+# Yarn v2/v3
+.yarn/
+.pnp.*
